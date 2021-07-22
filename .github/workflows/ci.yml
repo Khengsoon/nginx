@@ -16,14 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-#    - name: Build and publish Docker Image..   
-#      uses: mr-smithers-excellent/docker-build-push@v4
-#      with:
-#        image: cloudstrif/demo-app
-#        tag: latest
-#        registry: docker.io
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
   build_image:
     needs: build
     runs-on: ubuntu-18.04
@@ -38,12 +30,6 @@ jobs:
 
     - name: Use gcloud CLI
       run: gcloud info
-#    - name: Setup GCloud
-#      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-#      with:
-#        version: '274.0.1'
-#        service_account_email: ${{ secrets.GCP_SERVICE_ACCT_EMAIL }}
-#        service_account_key: ${{ secrets.GCP_SERVICE_ACCT_KEY }}
     - run:
         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
         gcloud config set run/region ${{ secrets.GCP_REGION }}
