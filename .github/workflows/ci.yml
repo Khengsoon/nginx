@@ -43,7 +43,7 @@ jobs:
       run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest
     
 #  deploy:
-#     needs: build
+#     needs: build  
 #     runs-on: ubuntu-latest
 #     steps:
 #     - run: docker pull cloudstrif/demo-app
