@@ -16,11 +16,37 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build and publish Docker Image
-      uses: mr-smithers-excellent/docker-build-push@v4
+#    - name: Build and publish Docker Image..   
+#      uses: mr-smithers-excellent/docker-build-push@v4
+#      with:
+#        image: cloudstrif/demo-app
+#        tag: latest
+#        registry: docker.io
+#        username: ${{ secrets.DOCKER_USERNAME }}
+#        password: ${{ secrets.DOCKER_PASSWORD }}
+  build_image:
+    needs: build
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup GCloud
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
-        image: cloudstrif/demo-app
-        tag: latest
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        version: '274.0.1'
+        service_account_email: ${{ secrets.GCP_SERVICE_ACCT_EMAIL }}
+        service_account_key: ${{ secrets.GCP_SERVICE_ACCT_KEY }}
+    - run:
+        gcloud config set project ${{ sercrets.GCP_PROJECT_ID }}
+        gcloud config set run/region ${{ secrets.GCP_REGION }}
+        gcloud auth configure-docker
+        gcloud info
+    - name: Build and Tag Image
+      run: docker build -t "grc.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.APPLICATION_NAME }}:latest" .
+    - name: Push to GCP image registry
+      run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.APPLICATION_NAME }}:latest"
+    
+#  deploy:
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#     - run: docker pull cloudstrif/demo-app
