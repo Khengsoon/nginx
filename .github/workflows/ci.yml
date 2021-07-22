@@ -40,7 +40,7 @@ jobs:
        docker build -t web-demo:version1 .
        docker tag web-demo:version1 gcr.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest
     - name: Push to GCP image registry
-      run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest
+      run: docker push web-demo:version1
     
 #  deploy:
 #     needs: build
