@@ -55,7 +55,7 @@ jobs:
           gcloud auth configure-docker
           gcloud info
       - name: Run unit test in cointainer
-        run: gcloud run deploy webdemo --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/web:latest    
+        run: kubectl create deployment webdemo --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/web:latest    
     #- name: Push to GCP image registry
     #  run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest
     
