@@ -20,7 +20,7 @@ jobs:
     - name: Buil and publish Docker Image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: cloudstrif/demoapp
+        image: cloudstrif/demo-app
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
