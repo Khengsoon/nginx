@@ -43,10 +43,10 @@ jobs:
         gcloud config set run/region ${{ secrets.GCP_REGION }}
         gcloud auth configure-docker
         gcloud info
-#    - name: Build and Tag Image
-#      run: docker build -t "grc.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.APPLICATION_NAME }}:latest" .
-#    - name: Push to GCP image registry
-#      run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.APPLICATION_NAME }}:latest"
+    - name: Build and Tag Image
+      run: docker build -t "grc.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest" .
+    - name: Push to GCP image registry
+      run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest"
     
 #  deploy:
 #     needs: build
