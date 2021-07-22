@@ -38,7 +38,7 @@ jobs:
     - name: Build and Tag Image
       run: docker build -t "grc.io/${{ secrets.GCP_PROJECT_ID }}/web:latest" .
     - name: Push to GCP image registry
-      run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/web:latest"
+      run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/web:latest
     #- name: Push to GCP image registry
     #  run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest
     
