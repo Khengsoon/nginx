@@ -36,9 +36,11 @@ jobs:
         gcloud auth configure-docker
         gcloud info
     - name: Build and Tag Image
-      run: docker build -t "us.gcr.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest" .
+      run: |
+       docker build -t "gcr.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest" .
+       docker tag web/demo:version1 gcr.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest
     - name: Push to GCP image registry
-      run: docker push us.grc.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest
+      run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest
     
 #  deploy:
 #     needs: build
