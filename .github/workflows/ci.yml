@@ -29,12 +29,21 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
-    - name: Setup GCloud
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@master
       with:
-        version: '274.0.1'
-        service_account_email: ${{ secrets.GCP_SERVICE_ACCT_EMAIL }}
-        service_account_key: ${{ secrets.GCP_SERVICE_ACCT_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+
+    - name: Use gcloud CLI
+      run: gcloud info
+#    - name: Setup GCloud
+#      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+#      with:
+#        version: '274.0.1'
+#        service_account_email: ${{ secrets.GCP_SERVICE_ACCT_EMAIL }}
+#        service_account_key: ${{ secrets.GCP_SERVICE_ACCT_KEY }}
     - run:
         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
         gcloud config set run/region ${{ secrets.GCP_REGION }}
