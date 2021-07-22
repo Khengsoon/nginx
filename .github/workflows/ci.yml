@@ -39,6 +39,23 @@ jobs:
       run: docker build -t "gcr.io/${{ secrets.GCP_PROJECT_ID }}/web:latest" .
     - name: Push to GCP image registry
       run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/web:latest
+  test_image:
+    needs: build_image
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Setup GCloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCT_KEY }}
+          export_default_credentials: true
+      - run: |
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+          gcloud config set run/region ${{ secrets.GCP_REGION }}
+          gcloud auth configure-docker
+          gcloud info
+      - name: Run unit test in cointainer
+        run: docker run "gcr.io/${{ secrets.GCP_PROJECT_ID }}/web:latest" -m unittest --verbose --failfast      
     #- name: Push to GCP image registry
     #  run: docker push grc.io/${{ secrets.GCP_PROJECT_ID }}/web-demo:latest
     
